@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-#this is a comment
-awk '{print $1, $9}' apache-access.log | awk '{count[$0]++} END {for (i in count) printf "%8d %s\n", count[i], i}' | sort -nr
+# Displays the number of occurrences, IP, and HTTP code from an Apache log
+
+awk '{print $1, $9}' | sort | uniq -c | sort -nr
