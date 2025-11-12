@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
-# Groups and sorts Apache log entries by IP and HTTP code
 
-awk '{if ($9 ~ /^[0-9]+$/) print $1, $9}' | sort | uniq -c | sort -nr
+# This script demonstrates grouping and counting using AWK's associative arrays,
+# followed by a final sort operation to meet all requirements.
 
+# Sample Apache log data is piped into the AWK command.
+cat << 'LOG_DATA' | awk '
+    # Main block: Increments a counter for each unique combination of IP ($1) and Status Code ($9).
+    {
+        counts[$1 " " $9]++;
+    }
+
+    # END block: Executes after all lines are processed.
+    END {
+        # Loop over the counted combinations and print the result in the required format:
+        # OCCURRENCE_NUMBER IP HTTP_CODE
+        for (combo in counts) {
+            print counts[combo], combo
+        }
+    }
+' | sort -nr
+LOG_DATA
