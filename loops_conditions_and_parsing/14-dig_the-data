@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script demonstrates grouping and counting using AWK's associative arrays,
 # followed by a final sort operation to meet all requirements.
 
