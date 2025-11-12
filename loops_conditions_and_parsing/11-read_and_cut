@@ -2,5 +2,6 @@
 #this is a comment
 while IFS=: read -r username _ userid _ _ homedir _
 do
-  echo "User: $username, UID: $userid, Home: $homedir"
+    # Print exactly in the format required
+    printf "User: %s, UID: %s, Home: %s\n" "$username" "$userid" "$homedir"
 done < /etc/passwd
