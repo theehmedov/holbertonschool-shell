@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # This script reads from standard input, so it can be used with a pipe.
 awk '
-NF == 8 { print $1, $7 } 
-NF == 9 { print $1, $8 } 
-NF >= 10 { print $1, $9 }
+/^(\S+).* ".*" ([0-9]{3}) / {
+    match($0, /^(\S+).* ".*" ([0-9]{3}) /, g)
+    print g[1], g[2]
+}
 ' apache-access.log | LC_ALL=C sort | LC_ALL=C uniq -c | LC_ALL=C sort -nr
