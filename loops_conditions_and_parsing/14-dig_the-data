@@ -1,8 +1,3 @@
 #!/usr/bin/env bash
 # This script reads from standard input, so it can be used with a pipe.
-awk '
-/^(\S+).* ".*" ([0-9]{3}) / {
-    match($0, /^(\S+).* ".*" ([0-9]{3}) /, g)
-    print g[1], g[2]
-}
-' apache-access.log | LC_ALL=C sort | LC_ALL=C uniq -c | LC_ALL=C sort -nr
+awk '{print $1, $9}' apache-access.log | sort |uniq -c | sort -nr
