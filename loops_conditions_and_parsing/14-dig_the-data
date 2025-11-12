@@ -1,22 +1,12 @@
 #!/usr/bin/env bash
-# Groups and sorts Apache log entries by IP and HTTP code
-
+# This script reads from standard input, so it can be used with a pipe.
 awk '
-    # AWK Main Block: Process input, ignoring blank lines and lines without a status code.
-    {
-        # Ensure the line has enough fields and the 9th field (status code) is present.
-        if (NF >= 9) {
-            # Group by IP ($1) and Status Code ($9) and increment the count.
-            counts[$1 " " $9]++;
-        }
+{
+    counts[$1 " " $9]++
+}
+END {
+    for (key in counts) {
+        print counts[key], key
     }
-
-    # AWK END Block: Execute after all input is read.
-    END {
-        # Iterate over all stored unique combinations.
-        for (combo in counts) {
-            # Print the count followed by the IP and HTTP code.
-            print counts[combo], combo
-        }
-    }
+}
 ' | sort -nr
