@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
-# This script demonstrates grouping and counting using AWK's associative arrays,
-# followed by a final sort operation to meet all requirements.
+# Groups and sorts Apache log entries by IP and HTTP code
 
-# Sample Apache log data is piped into the AWK command.
-cat << 'LOG_DATA' | awk '
-    # Main block: Increments a counter for each unique combination of IP ($1) and Status Code ($9).
+awk '
+    # AWK Main Block: Process input, ignoring blank lines and lines without a status code.
     {
-        counts[$1 " " $9]++;
+        # Ensure the line has enough fields and the 9th field (status code) is present.
+        if (NF >= 9) {
+            # Group by IP ($1) and Status Code ($9) and increment the count.
+            counts[$1 " " $9]++;
+        }
     }
 
-    # END block: Executes after all lines are processed.
+    # AWK END Block: Execute after all input is read.
     END {
-        # Loop over the counted combinations and print the result in the required format:
-        # OCCURRENCE_NUMBER IP HTTP_CODE
+        # Iterate over all stored unique combinations.
         for (combo in counts) {
+            # Print the count followed by the IP and HTTP code.
             print counts[combo], combo
         }
     }
 ' | sort -nr
-LOG_DATA
