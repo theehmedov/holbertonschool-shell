@@ -1,4 +1,5 @@
 #!/usr/bin/env
+# this is a comment
 count=1
 
 until [ $count -gt 10 ]
