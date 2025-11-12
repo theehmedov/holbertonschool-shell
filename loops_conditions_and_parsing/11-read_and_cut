@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #this is a comment
-while IFS=: read -r username _ userid _ _ homedir _
+while IFS=: read -r username password userid groupid comment home shell
 do
-    # Print exactly in the format required
-    printf "User: %s, UID: %s, Home: %s\n" "$username" "$userid" "$homedir"
+    echo "$username:$userid:$home"
 done < /etc/passwd
