@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#this is a comment
+echo "=== Currently Running Processes ==="
+echo
+
+# Display all processes in a user-oriented hierarchical format
+ps -eo user,pid,ppid,tty,stat,start,time,cmd --forest
