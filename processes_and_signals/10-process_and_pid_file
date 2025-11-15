@@ -1,0 +1,36 @@
+#!/usr/bin/env bash 
+#this is a comment 
+PIDFILE="/var/run/myscript.pid"
+
+# PID faylını yarat və skriptin PID-sini yaz
+echo $$ > $PIDFILE
+
+# SIGINT (Ctrl+C)
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# SIGTERM
+sigterm_handler() {
+    echo "I hate the kill command"
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# SIGQUIT
+sigquit_handler() {
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# Siqnalları bağlama
+trap sigint_handler SIGINT
+trap sigterm_handler SIGTERM
+trap sigquit_handler SIGQUIT
+
+# Sonsuz dövr
+while true
+do
+    echo "To infinity and beyond"
+    sleep 1
+done
