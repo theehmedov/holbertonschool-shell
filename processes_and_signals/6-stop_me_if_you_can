@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#this is a comment
+if pgrep -f "./4-to_infinity_and_beyond" > /dev/null 2>&1; then
+  pkill -f "./4-to_infinity_and_beyond"
+  exit 0
+fi
+
+# Fallback: match any command line containing the program name
+if pgrep -f "4-to_infinity_and_beyond" > /dev/null 2>&1; then
+  pkill -f "4-to_infinity_and_beyond"
+  exit 0
+fi
+
+# Nothing found — exit silently (same behavior as example)
+exit 0
